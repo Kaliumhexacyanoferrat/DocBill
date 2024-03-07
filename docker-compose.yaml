@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: docbill
+      POSTGRES_PASSWORD: docbill
+    volumes:
+      - /data/docker/docbill/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+      
+  docbill:
+    image: docbill
+    environment:
+      DOCBILL_DB_HOST: db
+    ports:
+      - 8081:8080
+  
