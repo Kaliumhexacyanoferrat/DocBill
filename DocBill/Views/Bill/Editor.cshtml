@@ -1,0 +1,91 @@
+﻿<section class="content">
+
+    <form novalidate="novalidate" id="editor" method="post" action=".">
+
+        <div class="row row-margin">
+
+            <div class="col-md-6">
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3 class="card-title">Allgemein</h3>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-group row">
+                            <label for="number" class="col-sm-2 col-form-label">Rechnungssteller</label>
+                            <div class="col-sm-10 form-control">
+                                <a href="/issuers/details/@Model.Data.Issuer.ID/">
+                                    @Model.Data.Issuer.Name
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-3 col-form-label">Rechnungsnummer</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="number" name="number" placeholder="gerda" value="@Model.Data.Number">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="status" class="col-sm-2 col-form-label">Status</label>
+                            <div class="col-sm-10 form-control">
+                                @{
+                                    switch ((int)Model.Data.Status)
+                                    {
+                                        case 0:
+                                            <span class="badge badge-info">Offen</span>
+                                            break;
+                                        case 1:
+                                            <span class="badge badge-primary">Abgeschlossen</span>
+                                            break;
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3 class="card-title">Weiteres</h3>
+                    </div>
+
+                    <div class="card-body">
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="row justify-content-end">
+
+            <div class="col-auto">
+                <button class="btn btn-block btn-primary">Speichern</button>
+            </div>
+
+            <div class="col-auto">
+                <a href="../../details/@Model.Data.ID/" class="btn btn-block btn-outline-primary">Abbrechen</a>
+            </div>
+
+        </div>
+
+    </form>
+
+</section>

@@ -1,0 +1,134 @@
+﻿@{ 
+    var list = Model.Data.List;
+}
+<section class="content">
+
+    <div class="row row-margin justify-content-between">
+
+        <div class="col-3">
+            <input type="search" class="form-control" placeholder="Suche">
+        </div>
+
+            <div class="col-9">
+
+                <div class="row justify-content-end">
+
+                    <div class="col-auto">
+                        <a href="@Model.Route("create/")" class="btn btn-block btn-outline-primary">Rechnungssteller anlegen</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+    </div>
+
+    <div class="row row-margin">
+
+        <div class="col-12">
+
+            <div class="card">
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-sm-12 table-responsive">
+
+                            <table class="table table-bordered table-striped table-hover">
+                            
+                                <thead class="thead-light">
+                                    <tr role="row">
+                                        <th>Name</th>
+                                        <th>Erstellt</th>
+                                    </tr>
+                                </thead>
+                               
+                                <tbody>
+                                    @foreach (var c in list.Records)
+                                    {
+                                        <tr data-id="@c.ID" class="record" style="cursor: pointer;">
+                                            <td scope="row">@c.Name</td>
+                                            <td>@c.Created.ToLocalTime()</td>
+                                        </tr>
+                                    }
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row justify-content-end">
+
+                        <div class="col-auto">
+
+                            <div class="dataTables_paginate paging_simple_numbers" id="customers_paginate">
+
+                                <ul class="pagination">
+
+                                    @if (list.CurrentPage > 1)
+                                    {
+                                        <li class="paginate_button page-item previous" id="customers_previous"><a href=".?page=@(list.CurrentPage - 1)" class="page-link">Vorherige</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="paginate_button page-item previous disabled" id="customers_previous"><a href="#" class="page-link">Vorherige</a></li>
+                                    }
+
+                                    @for (int i = list.CurrentPage - 3; i < list.CurrentPage; i++)
+                                    {
+                                        @if (i >= 1)
+                                        {
+                                            <li class="paginate_button page-item "><a href="./?page=@i" tabindex="0" class="page-link">@i</a></li>
+                                        }
+                                    }
+
+                                    <li class="paginate_button page-item active"><a href="#" class="page-link">@list.CurrentPage</a></li>
+
+                                    @for (int i = list.CurrentPage + 1; i < list.CurrentPage + 3; i++)
+                                    {
+                                        @if (i <= list.PageCount)
+                                        {
+                                            <li class="paginate_button page-item "><a href="./?page=@i" class="page-link">@i</a></li>
+                                        }
+                                    }
+
+                                    @if (list.CurrentPage + 1 <= list.PageCount)
+                                    {
+                                        <li class="paginate_button page-item next" id="customers_next"><a href="./?page=@(list.CurrentPage + 1)" class="page-link">Nächste</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="paginate_button page-item next disabled" id="customers_next"><a href="#" class="page-link">Nächste</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+    window.addEventListener("load", function() {
+
+        $(".record").click(function () {
+            window.location = "./details/" + $(this).data("id") + "/";
+        });
+
+    });
+
+</script>
+

@@ -1,0 +1,138 @@
+﻿
+<section class="content">
+
+    <div class="row row-margin justify-content-between">
+
+        <div class="col-3">
+            <input type="search" class="form-control" placeholder="Suche">
+        </div>
+
+    </div>
+
+    <div class="row row-margin">
+
+        <div class="col-12">
+
+            <div class="card">
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-sm-12 table-responsive">
+
+                            <table class="table table-bordered table-striped table-hover">
+                            
+                                <thead class="thead-light">
+                                    <tr role="row">
+                                        <th>Nummer</th>
+                                        <th>Status</th>
+                                        <th>Rechnungssteller</th>
+                                        <th>Erstellt</th>
+                                    </tr>
+                                </thead>
+                               
+                                <tbody>
+                                    @foreach (var b in Model.Data.Records)
+                                    {
+                                        <tr data-id="@b.ID" class="record" style="cursor: pointer;">
+                                            <td scope="row">@b.Number</td>
+                                            <td>
+                                                @{
+                                                    switch ((int)b.Status)
+                                                    {
+                                                        case 0:
+                                                            <span class="badge badge-info">Offen</span>
+                                                            break;
+                                                        case 1:
+                                                            <span class="badge badge-primary">Erledigt</span>
+                                                            break;
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                @b.Issuer.Name
+                                            </td>
+                                            <td>@b.Created.ToLocalTime()</td>
+                                        </tr>
+                                    }
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row justify-content-end">
+
+                        <div class="col-auto">
+
+                            <div class="dataTables_paginate paging_simple_numbers" id="customers_paginate">
+
+                                <ul class="pagination">
+
+                                    @if (Model.Data.CurrentPage > 1)
+                                    {
+                                        <li class="paginate_button page-item previous" id="customers_previous"><a href=".?page=@(Model.Data.CurrentPage - 1)" class="page-link">Vorherige</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="paginate_button page-item previous disabled" id="customers_previous"><a href="#" class="page-link">Vorherige</a></li>
+                                    }
+
+                                    @for (int i = Model.Data.CurrentPage - 3; i < Model.Data.CurrentPage; i++)
+                                    {
+                                        @if (i >= 1)
+                                        {
+                                            <li class="paginate_button page-item "><a href="./?page=@i" tabindex="0" class="page-link">@i</a></li>
+                                        }
+                                    }
+
+                                    <li class="paginate_button page-item active"><a href="#" class="page-link">@Model.Data.CurrentPage</a></li>
+
+                                    @for (int i = Model.Data.CurrentPage + 1; i < Model.Data.CurrentPage + 3; i++)
+                                    {
+                                        @if (i <= Model.Data.PageCount)
+                                        {
+                                            <li class="paginate_button page-item "><a href="./?page=@i" class="page-link">@i</a></li>
+                                        }
+                                    }
+
+                                    @if (Model.Data.CurrentPage + 1 <= Model.Data.PageCount)
+                                    {
+                                        <li class="paginate_button page-item next" id="customers_next"><a href="./?page=@(Model.Data.CurrentPage + 1)" class="page-link">Nächste</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="paginate_button page-item next disabled" id="customers_next"><a href="#" class="page-link">Nächste</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+    window.addEventListener("load", function() {
+
+        $(".record").click(function () {
+            window.location = "./details/" + $(this).data("id") + "/";
+        });
+
+    });
+
+</script>
+

@@ -30,7 +30,7 @@ namespace DocBill.Model
         [Column("number")]
         public string Number { get; set; }
 
-        [Column("customer")]
+        [Column("issuer")]
         public int IssuerId { get; set; }
 
         [Column("status")]

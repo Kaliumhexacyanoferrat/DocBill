@@ -1,9 +1,9 @@
 ﻿using DocBill.Controllers;
 using GenHTTP.Api.Content;
+using GenHTTP.Api.Protocol;
 using GenHTTP.Modules.Controllers;
 using GenHTTP.Modules.IO;
 using GenHTTP.Modules.Layouting;
-using GenHTTP.Modules.Markdown;
 using GenHTTP.Modules.Websites;
 using GenHTTP.Themes.AdminLTE;
 
@@ -15,30 +15,36 @@ namespace DocBill
 
         public static IHandlerBuilder Create()
         {
-            var index = ModMarkdown.Page(Resource.FromAssembly("Home.md"))
-                       .Title("Home");
+            var resources = Resources.From(ResourceTree.FromAssembly("Resources"));
 
-            var resources = Resources.From(ResourceTree.FromAssembly("Static"));
-
-            var app = Layout.Create()
-                            .Index(index)
-                            .Add("static", resources);
+            var logo = Content.From(Resource.FromAssembly("eye.png"));
 
             var theme = Theme.Create()
-                             .Title("Book Manager");
+                             .Title("DocBill")
+                             .FooterRight(RenderFooterRight)
+                             .Logo(logo);
+
+            var content = Layout.Create()
+                                .AddController<IssuerController>("issuers")
+                                .AddController<BillController>("bills")
+                                .Add("static", resources);
 
             var menu = Menu.Empty()
-                           .Add("{website}", "Home")
-                           .Add("/books/", "Books");
+                           .Add("{website}", "Übersicht")
+                           .Add("/issuers/", "Rechnungssteller")
+                           .Add("/bills/", "Rechnungen");
 
-            var website = Website.Create()
-                                 .Theme(theme)
-                                 .Menu(menu)
-                                 .Content(app)
-                                 .AddScript("custom.js", Resource.FromAssembly("custom.js"))
-                                 .AddStyle("custom.css", Resource.FromAssembly("custom.css"));
+            return Website.Create()
+                          .Theme(theme)
+                          .Content(content)
+                          .Menu(menu)
+                          .AddScript("jquery-validate.js", Resource.FromAssembly("jquery.validate.min.js"))
+                          .AddStyle("project.css", Resource.FromAssembly("project.css"));
+        }
 
-            return website;
+        private static string RenderFooterRight(IRequest request, IHandler handler)
+        {
+            return "view <a href=\"https://github.com/Kaliumhexacyanoferrat/DocBill\">on GitHub</a>";
         }
 
     }

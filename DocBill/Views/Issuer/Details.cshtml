@@ -1,0 +1,73 @@
+﻿@{ 
+    var issuer = Model.Data.Issuer;
+}
+
+<section class="content">
+
+    <div class="row row-margin justify-content-end">
+
+        <div class="col-auto">
+            <a href="../../../bills/create/@issuer.ID/" class="btn btn-block btn-outline-primary">Neue Rechnung</a>
+        </div>
+
+        <div class="col-auto">
+            <a href="../../edit/@issuer.ID/" class="btn btn-block btn-outline-primary">Bearbeiten</a>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <h3 class="card-title">Stammdaten</h3>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-3 col-form-label">Name</label>
+                        <div class="col-sm-9 form-control">@issuer.Name</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <h3 class="card-title">Weiteres</h3>
+                </div>
+
+                <div class="card-body">
+                                       
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+
+    window.addEventListener("load", function() {
+
+
+
+    });
+
+</script>
