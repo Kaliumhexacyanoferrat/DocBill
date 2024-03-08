@@ -42,6 +42,8 @@ namespace DocBill.Controllers
                                .OrderByDescending(b => b.Created)
                                .ToList();
 
+            records.ForEach(b => b.Status = DetermineStatus(b));
+
             var pages = (total + PAGE_SIZE - 1) / PAGE_SIZE;
 
             var paged = new PagedList<Bill>(records, page, pages, total);
@@ -63,6 +65,8 @@ namespace DocBill.Controllers
             {
                 return null;
             }
+
+            bill.Status = DetermineStatus(bill);
 
             return ModRazor.Page(Resource.FromAssembly("Bill.Details.cshtml"), (r, h) => new ViewModel<Bill>(r, h, bill))
                            .Title($"Rechnung {bill.Number}");
@@ -102,6 +106,7 @@ namespace DocBill.Controllers
             bill.Issuer = issuer;
             bill.Status = PaymentStatus.Open;
 
+            bill.BillingDate = UnknownToUtc(bill.BillingDate);
             bill.DueDate = UnknownToUtc(bill.DueDate);
 
             bill.Created = DateTime.UtcNow;
@@ -129,6 +134,7 @@ namespace DocBill.Controllers
             }
 
             return ModRazor.Page(Resource.FromAssembly("Bill.Editor.cshtml"), (r, h) => new ViewModel<Bill>(r, h, bill))
+                           .AddUsing("System.Globalization")
                            .Title($"Rechnung bearbeiten");
         }
 
@@ -149,6 +155,8 @@ namespace DocBill.Controllers
             existing.Modified = DateTime.UtcNow;
             existing.Number = bill.Number.Trim();
             existing.DueDate = UnknownToUtc(bill.DueDate);
+            existing.BillingDate = UnknownToUtc(bill.BillingDate);
+            existing.Amount = bill.Amount;
 
             context.SaveChanges();
 
@@ -158,6 +166,16 @@ namespace DocBill.Controllers
         private static DateTime UnknownToUtc(DateTime dateTime)
         {
             return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 0, 0, 0, DateTimeKind.Utc);
+        }
+
+        private static PaymentStatus DetermineStatus(Bill bill)
+        {
+            if ((bill.Status == PaymentStatus.Open) && (bill.DueDate < DateTime.UtcNow))
+            {
+                return PaymentStatus.Due;
+            }
+
+            return bill.Status;
         }
 
     }

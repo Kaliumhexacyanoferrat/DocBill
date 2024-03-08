@@ -36,6 +36,13 @@
                         </div>
                     </div>
 
+                    <div class="form-group row">
+                        <label for="title" class="col-sm-3 col-form-label">Rechnungsdatum</label>
+                        <div class="col-sm-9">
+                            <div class="col-sm-9 form-control">@Model.Data.BillingDate.ToShortDateString()</div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -52,6 +59,12 @@
 
                 <div class="card-body">
 
+                    <div class="form-group row">
+                        <label for="title" class="col-sm-3 col-form-label">Betrag</label>
+                        <div class="col-sm-9">
+                            <div class="col-sm-9 form-control">@Model.Data.Amount €</div>
+                        </div>
+                    </div>
 
                     <div class="form-group row">
                         <label for="title" class="col-sm-3 col-form-label">Fällig am</label>
@@ -71,6 +84,9 @@
                                         break;
                                     case 1:
                                         <span class="badge badge-primary">Abgeschlossen</span>
+                                        break;
+                                    case 99:
+                                        <span class="badge badge-warning">Fällig</span>
                                         break;
                                 }
                             }

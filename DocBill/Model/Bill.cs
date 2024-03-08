@@ -11,9 +11,20 @@ namespace DocBill.Model
     public enum PaymentStatus : short
     {
 
+        /// <summary>
+        /// Yet to be payed.
+        /// </summary>
         Open = 0,
 
-        Done = 1
+        /// <summary>
+        /// Payed.
+        /// </summary>
+        Done = 1,
+
+        /// <summary>
+        /// Open AND due.
+        /// </summary>
+        Due = 99
 
     }
 
@@ -30,8 +41,14 @@ namespace DocBill.Model
         [Column("number")]
         public string Number { get; set; }
 
+        [Column("billing_date")]
+        public DateTime BillingDate { get; set; }
+
         [Column("due_date")]
         public DateTime DueDate { get; set; }
+
+        [Column("amount")]
+        public double Amount { get; set; }
 
         [Column("issuer")]
         public int IssuerId { get; set; }

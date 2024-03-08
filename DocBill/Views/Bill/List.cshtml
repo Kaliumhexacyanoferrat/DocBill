@@ -27,6 +27,8 @@
                                     <tr role="row">
                                         <th>Rechnungssteller</th>
                                         <th>Nummer</th>
+                                        <th>Betrag</th>
+                                        <th>Rechnungsdatum</th>
                                         <th>Fällig am</th>
                                         <th>Status</th>
                                     </tr>
@@ -36,10 +38,10 @@
                                     @foreach (var b in Model.Data.Records)
                                     {
                                         <tr data-id="@b.ID" class="record" style="cursor: pointer;">
-                                            <td>
-                                                @b.Issuer.Name
-                                            </td>
+                                            <td>@b.Issuer.Name</td>
                                             <td scope="row">@b.Number</td>
+                                            <td>@b.Amount €</td>
+                                            <td>@b.BillingDate.ToShortDateString()</td>
                                             <td>@b.DueDate.ToShortDateString()</td>
                                             <td>
                                                 @{
@@ -50,6 +52,9 @@
                                                             break;
                                                         case 1:
                                                             <span class="badge badge-primary">Erledigt</span>
+                                                            break;
+                                                        case 99:
+                                                            <span class="badge badge-warning">Fällig</span>
                                                             break;
                                                     }
                                                 }
