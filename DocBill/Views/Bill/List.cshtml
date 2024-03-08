@@ -25,10 +25,10 @@
                             
                                 <thead class="thead-light">
                                     <tr role="row">
-                                        <th>Nummer</th>
-                                        <th>Status</th>
                                         <th>Rechnungssteller</th>
-                                        <th>Erstellt</th>
+                                        <th>Nummer</th>
+                                        <th>Fällig am</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                
@@ -36,7 +36,11 @@
                                     @foreach (var b in Model.Data.Records)
                                     {
                                         <tr data-id="@b.ID" class="record" style="cursor: pointer;">
+                                            <td>
+                                                @b.Issuer.Name
+                                            </td>
                                             <td scope="row">@b.Number</td>
+                                            <td>@b.DueDate.ToShortDateString()</td>
                                             <td>
                                                 @{
                                                     switch ((int)b.Status)
@@ -50,10 +54,6 @@
                                                     }
                                                 }
                                             </td>
-                                            <td>
-                                                @b.Issuer.Name
-                                            </td>
-                                            <td>@b.Created.ToLocalTime()</td>
                                         </tr>
                                     }
                                 </tbody>

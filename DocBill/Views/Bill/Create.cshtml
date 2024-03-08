@@ -15,8 +15,8 @@
                     <div class="card-body">
 
                         <div class="form-group row">
-                            <label for="number" class="col-sm-2 col-form-label">Rechnungssteller</label>
-                            <div class="col-sm-10">
+                            <label for="number" class="col-sm-3 col-form-label">Rechnungssteller</label>
+                            <div class="col-sm-9">
                                 <div class="form-control">
                                     @Model.Data.Name
                                 </div>
@@ -24,8 +24,8 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="title" class="col-sm-2 col-form-label">Rechnungsnummer</label>
-                            <div class="col-sm-10">
+                            <label for="title" class="col-sm-3 col-form-label">Rechnungsnummer</label>
+                            <div class="col-sm-9">
                                 <input type="text" class="form-control" id="number" name="number" placeholder="0123456">
                             </div>
                         </div>
@@ -41,11 +41,17 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <h3 class="card-title">Weiteres</h3>
+                        <h3 class="card-title">Zahlung</h3>
                     </div>
 
                     <div class="card-body">
 
+                        <div class="form-group row">
+                            <label for="title" class="col-sm-3 col-form-label">Fällig am</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" id="dueDate" name="dueDate">
+                            </div>
+                        </div>
                     
                     </div>
 

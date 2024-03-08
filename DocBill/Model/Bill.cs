@@ -30,6 +30,9 @@ namespace DocBill.Model
         [Column("number")]
         public string Number { get; set; }
 
+        [Column("due_date")]
+        public DateTime DueDate { get; set; }
+
         [Column("issuer")]
         public int IssuerId { get; set; }
 

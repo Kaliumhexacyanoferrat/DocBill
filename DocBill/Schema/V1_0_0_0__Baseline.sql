@@ -20,6 +20,7 @@ CREATE TABLE bill
     status       SMALLINT     NOT NULL,
     issuer       INT          NOT NULL,
     number       VARCHAR(255) NOT NULL,
+    due_date     DATE         NOT NULL,
     created      TIMESTAMP    NOT NULL,
     modified     TIMESTAMP    NOT NULL,
     PRIMARY KEY (id)

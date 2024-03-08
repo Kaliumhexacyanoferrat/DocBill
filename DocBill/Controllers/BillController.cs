@@ -102,6 +102,8 @@ namespace DocBill.Controllers
             bill.Issuer = issuer;
             bill.Status = PaymentStatus.Open;
 
+            bill.DueDate = UnknownToUtc(bill.DueDate);
+
             bill.Created = DateTime.UtcNow;
             bill.Modified = DateTime.UtcNow;
 
@@ -146,10 +148,16 @@ namespace DocBill.Controllers
 
             existing.Modified = DateTime.UtcNow;
             existing.Number = bill.Number.Trim();
+            existing.DueDate = UnknownToUtc(bill.DueDate);
 
             context.SaveChanges();
 
             return Redirect.To($"/bills/details/{id}/", true);
+        }
+
+        private static DateTime UnknownToUtc(DateTime dateTime)
+        {
+            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 0, 0, 0, DateTimeKind.Utc);
         }
 
     }
